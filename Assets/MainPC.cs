@@ -46,6 +46,7 @@ public class MainPC : MonoBehaviour
     //Inputs inputs;
 
     public Vector3 exposedVelocity;
+    public int collisions = 0;
 
     //create States, set default state
     void Awake()
@@ -178,6 +179,7 @@ public class MainPC : MonoBehaviour
 
     void OnCollisionEnter(Collision c)
     {
+        collisions++;
         if (c.impulse.sqrMagnitude > 0)
             GetComponent<JigglePhysics>().Squish(c.impulse.magnitude, c.impulse);
 
@@ -190,6 +192,8 @@ public class MainPC : MonoBehaviour
             Debug.Log("damage: " + HP);
             HP--;
         }
+        
+        attatchedTo = c.gameObject;
         // if( (transform.position - lastAffixPos).magnitude > minTravelBeforeAffix ||
         //  Time.time- lastAffixTime > minTimeBeforeAffix)
         // {
@@ -200,13 +204,13 @@ public class MainPC : MonoBehaviour
         // }
     }
 
-    void OnCollisionStay(Collision c)
+    void FixedUpdate()
     {
+        if (collisions > 0)
         if ((transform.position - lastAffixPos).magnitude > minTravelBeforeAffix ||
          Time.time - lastAffixTime > minTimeBeforeAffix)
         {
             stickytime = true;
-            attatchedTo = c.gameObject;
             lastAffixPos = transform.position;
             lastAffixTime = Time.time;
         }
@@ -214,6 +218,7 @@ public class MainPC : MonoBehaviour
 
     void OnCollisionExit(Collision c)
     {
+        collisions--;
     }
 
     //     void UpdateInputs()
