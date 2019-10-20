@@ -179,8 +179,8 @@ MonoBehaviour:
   maxJumpSpeed: 30
   minJumpSpeed: 15
   chargeupTime: 3
-  overchargeTime: 5
-  minTravelBeforeAffix: 8
+  overchargeTime: 4
+  minTravelBeforeAffix: 2
   minTimeBeforeAffix: 5
   state: DefaultState
   Cam: {fileID: 0}

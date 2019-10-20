@@ -2047,7 +2047,7 @@ PrefabInstance:
     - target: {fileID: 933124794831448704, guid: 9667cd98d94824143a79d96944d0d1ba,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 20.06
+      value: 21.07
       objectReference: {fileID: 0}
     - target: {fileID: 933124794831448704, guid: 9667cd98d94824143a79d96944d0d1ba,
         type: 3}
@@ -2063,11 +2063,6 @@ PrefabInstance:
         type: 3}
       propertyPath: neutral.m_Bits
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 933124794831448706, guid: 9667cd98d94824143a79d96944d0d1ba,
-        type: 3}
-      propertyPath: minTravelBeforeAffix
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 933124794831448717, guid: 9667cd98d94824143a79d96944d0d1ba,
         type: 3}
