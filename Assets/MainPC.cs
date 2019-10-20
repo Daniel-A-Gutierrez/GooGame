@@ -43,6 +43,7 @@ public class MainPC : MonoBehaviour
     Vector3 initialScale;
 
     public GameObject Cam;
+    LaunchArcRenderer arcRenderer;
     GameObject interactingWith;
 
     public LayerMask heal;
@@ -65,6 +66,9 @@ public class MainPC : MonoBehaviour
         States["InteractingState"] = InteractingState;
         States["ChargingUpState"] = ChargingUpState;
         States["MovingState"] = MovingState;
+
+        arcRenderer = Cam.GetComponent<LaunchArcRenderer>();
+        arcRenderer.show_bar = false;
     }
 
     //do States[state]
@@ -118,6 +122,7 @@ public class MainPC : MonoBehaviour
     //Charging Up State
     void EnterChargingUpState()
     {
+        arcRenderer.show_bar = true;
         state = "ChargingUpState";
         jumpInitTime = Time.time;
     }
@@ -149,6 +154,7 @@ public class MainPC : MonoBehaviour
 
     void ExitChargingUpState()
     {
+        arcRenderer.show_bar = false;
         exposedVelocity = Vector3.zero;
     }
     //MovingState
@@ -158,7 +164,7 @@ public class MainPC : MonoBehaviour
         /*transform.SetParent(null);
         transform.localScale = initialScale;*/
         rb.isKinematic = false;
-        //rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         attatchedTo = null;
         stickytime = false;
         state = "MovingState";
@@ -193,10 +199,10 @@ public class MainPC : MonoBehaviour
         if (c.impulse.sqrMagnitude > 0)
             GetComponent<JigglePhysics>().Squish(c.impulse.magnitude, c.impulse);
 
-        if ((c.gameObject.layer & heal) != 0)
+        if ((1 << c.gameObject.layer & heal) != 0)
             HP += c.gameObject.GetComponent<HealingItem>().amount;
 
-        if ((c.gameObject.layer & damage) != 0)
+        if ((1 << c.gameObject.layer & damage) != 0)
         {
             //c.gameObject.layer = neutral;
             Debug.Log("damage: " + HP);
