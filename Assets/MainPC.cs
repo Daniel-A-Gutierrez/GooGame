@@ -51,7 +51,7 @@ public class MainPC : MonoBehaviour
         initialScale = transform.localScale; 
         rb = GetComponent<Rigidbody>();
         States = new Dictionary<string,Action>();
-        state = "DefaultState"; //stuck on non interactable object
+        state = "MovingState"; //stuck on non interactable object
         States["DefaultState"] = DefaultState;
         States["InteractingState"] = InteractingState;
         States["ChargingUpState"] = ChargingUpState;
@@ -140,9 +140,11 @@ public class MainPC : MonoBehaviour
         //set kinematic, set no parent, add force, stickytime false, set state 
     void EnterMovingState()
     {
-        transform.SetParent(null);
-        transform.localScale = initialScale;
+        /*transform.SetParent(null);
+        transform.localScale = initialScale;*/
         rb.isKinematic =false;
+        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        attatchedTo = null;
         stickytime = false;
         state= "MovingState";
     }
@@ -160,10 +162,11 @@ public class MainPC : MonoBehaviour
     void ExitMovingState()
     {
         //on notiification of collision
-        transform.SetParent(attatchedTo.transform);
+        /*transform.SetParent(attatchedTo.transform);
         transform.localEulerAngles = Vector3.zero;
         Vector3 i = attatchedTo.transform.localScale;
-        transform.localScale=  new Vector3(1/i.x, 1/i.y, 1/i.z);
+        transform.localScale=  new Vector3(1/i.x, 1/i.y, 1/i.z);*/
+        rb.collisionDetectionMode = CollisionDetectionMode.Discrete;
         rb.isKinematic = true;
         //if the thing is interactable, enter that state. for now we're not doing that.
 
@@ -171,7 +174,7 @@ public class MainPC : MonoBehaviour
 
     void OnCollisionEnter(Collision c)
     {
-        if(c.impulse.sqrMagnitude > 0)
+        if (c.impulse.sqrMagnitude > 0)
             GetComponent<JigglePhysics>().Squish(c.impulse.magnitude,c.impulse);
         if((c.gameObject.layer & heal) != 0)
             HP+= c.gameObject.GetComponent<HealingItem>().amount;
@@ -193,7 +196,7 @@ public class MainPC : MonoBehaviour
 
     void OnCollisionStay(Collision c)
     {
-        if( (transform.position - lastAffixPos).magnitude > minTravelBeforeAffix ||
+        if ( (transform.position - lastAffixPos).magnitude > minTravelBeforeAffix ||
          Time.time- lastAffixTime > minTimeBeforeAffix)
         {
             stickytime= true;
@@ -205,8 +208,6 @@ public class MainPC : MonoBehaviour
 
     void OnCollisionExit(Collision c)
     {
-        stickytime = false;
-        attatchedTo = null;
     }
 
 //     void UpdateInputs()
