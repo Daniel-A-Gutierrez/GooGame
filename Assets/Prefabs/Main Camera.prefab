@@ -101,3 +101,7 @@ MonoBehaviour:
   HorizontalSensitivity: 1
   VerticalSensitivity: 1
   offset: {x: 0, y: 2, z: 0}
+  aim: 304
+  aimingFollowDistance: 0.25
+  aimingOffset: {x: 0, y: 0.25, z: 0}
+  aimingFOV: 90

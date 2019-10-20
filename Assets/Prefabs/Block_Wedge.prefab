@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 3346056556003463587}
   - component: {fileID: 5794468773746177027}
   - component: {fileID: 1992246911542361078}
-  m_Layer: 0
-  m_Name: Wedge
+  m_Layer: 8
+  m_Name: Block_Wedge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
