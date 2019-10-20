@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-
-    public int lives; //for testing purposes
+    [SerializeField] MainPC mainPC;
+    //public int lives; //for testing purposes
 
     GameObject canvas;
     Image image;
@@ -32,25 +32,25 @@ public class HealthBar : MonoBehaviour
 
     void LiveCountSetter(int i)
     {
-        if (lives + i >= 0 || lives + i <= 3)
+        if (mainPC.HP + i >= 0 || mainPC.HP + i <= 3)
         {
-            lives += i;
+            mainPC.HP += i;
         }
-        image.sprite = sprite[lives];
+        image.sprite = sprite[mainPC.HP];
     }
 
 
     void LiveCountUpdate()
     {
-        if (lives > 3)
+        if (mainPC.HP > 3)
         {
-            lives = 3;
+            mainPC.HP = 3;
         }
 
-        else if (lives < 0)
+        else if (mainPC.HP < 0)
         {
-            lives = 0;
+            mainPC.HP = 0;
         }
-        image.sprite = sprite[lives];
+        image.sprite = sprite[mainPC.HP];
     }
 }

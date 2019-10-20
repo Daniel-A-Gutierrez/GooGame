@@ -199,17 +199,20 @@ public class MainPC : MonoBehaviour
         if (c.impulse.sqrMagnitude > 0)
             GetComponent<JigglePhysics>().Squish(c.impulse.magnitude, c.impulse);
 
-        if ((1 << c.gameObject.layer & heal) != 0)
-            HP += c.gameObject.GetComponent<HealingItem>().amount;
-
-        if ((1 << c.gameObject.layer & damage) != 0)
+        if (attatchedTo != c.gameObject)
         {
-            //c.gameObject.layer = neutral;
-            Debug.Log("damage: " + HP);
-            HP--;
+            if ((1 << c.gameObject.layer & heal) != 0)
+                HP += c.gameObject.GetComponent<HealingItem>().amount;
+
+            if ((1 << c.gameObject.layer & damage) != 0)
+            {
+                //c.gameObject.layer = neutral;
+                Debug.Log("damage: " + HP);
+                HP--;
+            }
+
+            attatchedTo = c.gameObject;
         }
-        
-        attatchedTo = c.gameObject;
         // if( (transform.position - lastAffixPos).magnitude > minTravelBeforeAffix ||
         //  Time.time- lastAffixTime > minTimeBeforeAffix)
         // {
