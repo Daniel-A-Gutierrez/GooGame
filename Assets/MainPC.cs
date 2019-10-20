@@ -38,6 +38,7 @@ public class MainPC : MonoBehaviour
     Vector3 initialScale;
 
     public GameObject Cam;
+    GameObject interactingWith;
     //Inputs inputs;
 
     //create States, set default state
@@ -89,7 +90,7 @@ public class MainPC : MonoBehaviour
     //Interacting State
     void EnterInteractingState()
     {
-        
+        state = "InteractingState";
     }
     void InteractingState()
     {
@@ -164,17 +165,19 @@ public class MainPC : MonoBehaviour
 
     }
 
-    // void OnCollisionEnter(Collision c)
-    // {
-    //     if( (transform.position - lastAffixPos).magnitude > minTravelBeforeAffix ||
-    //      Time.time- lastAffixTime > minTimeBeforeAffix)
-    //     {
-    //         stickytime= true;
-    //         attatchedTo = c.gameObject;
-    //         lastAffixPos= transform.position;
-    //         lastAffixTime = Time.time;
-    //     }
-    // }
+    void OnCollisionEnter(Collision c)
+    {
+        if(c.impulse.sqrMagnitude > 0)
+            GetComponent<JigglePhysics>().Squish(c.impulse.magnitude,c.impulse);
+        // if( (transform.position - lastAffixPos).magnitude > minTravelBeforeAffix ||
+        //  Time.time- lastAffixTime > minTimeBeforeAffix)
+        // {
+        //     stickytime= true;
+        //     attatchedTo = c.gameObject;
+        //     lastAffixPos= transform.position;
+        //     lastAffixTime = Time.time;
+        // }
+    }
 
     void OnCollisionStay(Collision c)
     {
