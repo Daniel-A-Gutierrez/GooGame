@@ -43,7 +43,7 @@ public class CameraFollow: MonoBehaviour {
 
     void LateUpdate()
     {
-        if(Input.GetKey(aim))
+        if(Input.GetKey(aim) && !lockCamera)
         {
             offset = aimingOffset;
             followDistance = aimingFollowDistance;
