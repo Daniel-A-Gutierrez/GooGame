@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 933124794831448716}
   m_Layer: 0
   m_Name: FESPER
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -176,10 +176,10 @@ MonoBehaviour:
   release: 32
   jump: 32
   jumpCooldown: 1
-  maxJumpSpeed: 40
+  maxJumpSpeed: 30
   minJumpSpeed: 15
-  chargeupTime: 5
-  overchargeTime: 8
+  chargeupTime: 3
+  overchargeTime: 5
   minTravelBeforeAffix: 8
   minTimeBeforeAffix: 5
   state: DefaultState
