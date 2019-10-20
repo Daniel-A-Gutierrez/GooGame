@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4c459f27aff548741bf63056b2e2ab78
+guid: 556cb7866309a0b449474b71f23d9e9b
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable: []
@@ -7,8 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Diffuse
-    second: {fileID: 2100000, guid: 4326f50b8b7dcf74498c844ae6ec1632, type: 2}
+      name: ElectricalSocket
+    second: {fileID: 2100000, guid: c127b8356798f0c4dbb52e95662fbb7e, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -92,7 +92,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

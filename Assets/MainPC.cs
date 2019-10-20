@@ -45,6 +45,8 @@ public class MainPC : MonoBehaviour
     public LayerMask damage;
     //Inputs inputs;
 
+    public Vector3 exposedVelocity;
+
     //create States, set default state
     void Awake()
     {
@@ -117,6 +119,8 @@ public class MainPC : MonoBehaviour
         {
             ExitChargingUpState();
             EnterMovingState();
+            exposedVelocity = aimdir.normalized *
+                Mathf.Lerp(minJumpSpeed, maxJumpSpeed, (Time.time - jumpInitTime) / chargeupTime);
             Launch();
         }
         if (Time.time - jumpInitTime > overchargeTime)
@@ -134,7 +138,7 @@ public class MainPC : MonoBehaviour
 
     void ExitChargingUpState()
     {
-
+        exposedVelocity = Vector3.zero;
     }
     //MovingState
     //set kinematic, set no parent, add force, stickytime false, set state 
