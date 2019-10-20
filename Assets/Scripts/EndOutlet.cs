@@ -44,9 +44,13 @@ public class EndOutlet : MonoBehaviour
             float startH = cameraFollower.horizDir;
             float startV = cameraFollower.vertDir;
 
+            float hdisp = cameraDirection.x - startH % 360;
+            if (hdisp > 180)
+                hdisp = 360 - hdisp;
+
             for (int i = 0; i < 60; i++)
             {
-                cameraFollower.horizDir = Mathf.Lerp(startH, cameraDirection.x, (i + 1) / 60f);
+                cameraFollower.horizDir = startH + hdisp * (i + 1) / 60f;
                 cameraFollower.vertDir = Mathf.Lerp(startV, cameraDirection.y, (i + 1) / 60f);
                 other.transform.position = Vector3.Lerp(start, transform.position + direction, (i + 1) / 60f);
                 yield return null;
