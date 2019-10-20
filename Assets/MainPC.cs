@@ -21,7 +21,7 @@ public class MainPC : MonoBehaviour
     public float overchargeTime;
     float jumpInitTime;
 
-    
+
     public float minTravelBeforeAffix;
     public float minTimeBeforeAffix;
     float lastAffixTime;
@@ -30,7 +30,7 @@ public class MainPC : MonoBehaviour
 
     [SerializeField]
     string state;
-    Dictionary<string,Action> States;
+    Dictionary<string, Action> States;
 
     GameObject attatchedTo;
     GameObject cam;
@@ -48,9 +48,9 @@ public class MainPC : MonoBehaviour
     //create States, set default state
     void Awake()
     {
-        initialScale = transform.localScale; 
+        initialScale = transform.localScale;
         rb = GetComponent<Rigidbody>();
-        States = new Dictionary<string,Action>();
+        States = new Dictionary<string, Action>();
         state = "MovingState"; //stuck on non interactable object
         States["DefaultState"] = DefaultState;
         States["InteractingState"] = InteractingState;
@@ -71,15 +71,15 @@ public class MainPC : MonoBehaviour
     {
         state = "DefaultState";
     }
-        //go to moving if release, go to charging up if jump
+    //go to moving if release, go to charging up if jump
     void DefaultState()
     {
-        if(Input.GetKeyUp(release))
+        if (Input.GetKeyUp(release))
         {
             ExitDefaultState();
             EnterMovingState();
         }
-        if(Input.GetKeyDown(jump) && Time.time - jumpInitTime > jumpCooldown)
+        if (Input.GetKeyDown(jump) && Time.time - jumpInitTime > jumpCooldown)
         {
             ExitDefaultState();
             EnterChargingUpState();
@@ -107,19 +107,19 @@ public class MainPC : MonoBehaviour
     //Charging Up State
     void EnterChargingUpState()
     {
-        state= "ChargingUpState";
+        state = "ChargingUpState";
         jumpInitTime = Time.time;
     }
-        //enter moving state if successful jump, enter default if overcharge. 
+    //enter moving state if successful jump, enter default if overcharge. 
     void ChargingUpState()
     {
-        if(Input.GetKeyUp(jump))
+        if (Input.GetKeyUp(jump))
         {
             ExitChargingUpState();
             EnterMovingState();
             Launch();
         }
-        if(Time.time - jumpInitTime > overchargeTime)
+        if (Time.time - jumpInitTime > overchargeTime)
         {
             ExitChargingUpState();
             EnterDefaultState();
@@ -128,37 +128,37 @@ public class MainPC : MonoBehaviour
 
     void Launch()
     {
-        rb.AddForce(aimdir.normalized * 
-            Mathf.Lerp( minJumpSpeed,maxJumpSpeed, (Time.time- jumpInitTime) / chargeupTime), ForceMode.VelocityChange );
+        rb.AddForce(aimdir.normalized *
+            Mathf.Lerp(minJumpSpeed, maxJumpSpeed, (Time.time - jumpInitTime) / chargeupTime), ForceMode.VelocityChange);
     }
 
     void ExitChargingUpState()
     {
-        
+
     }
     //MovingState
-        //set kinematic, set no parent, add force, stickytime false, set state 
+    //set kinematic, set no parent, add force, stickytime false, set state 
     void EnterMovingState()
     {
         /*transform.SetParent(null);
         transform.localScale = initialScale;*/
-        rb.isKinematic =false;
+        rb.isKinematic = false;
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         attatchedTo = null;
         stickytime = false;
-        state= "MovingState";
+        state = "MovingState";
     }
-        //wait for stickytime to be true to go to default.
+    //wait for stickytime to be true to go to default.
     void MovingState()
     {
         //wait for collision
-        if(stickytime)
+        if (stickytime)
         {
             ExitMovingState();
             EnterDefaultState();
         }
     }
-        //set parent, set kinematic
+    //set parent, set kinematic
     void ExitMovingState()
     {
         //on notiification of collision
@@ -175,12 +175,12 @@ public class MainPC : MonoBehaviour
     void OnCollisionEnter(Collision c)
     {
         if (c.impulse.sqrMagnitude > 0)
-            GetComponent<JigglePhysics>().Squish(c.impulse.magnitude,c.impulse);
+            GetComponent<JigglePhysics>().Squish(c.impulse.magnitude, c.impulse);
 
         if ((c.gameObject.layer & heal) != 0)
-            HP+= c.gameObject.GetComponent<HealingItem>().amount;
+            HP += c.gameObject.GetComponent<HealingItem>().amount;
 
-        else if ((c.gameObject.layer & damage ) != 0 )
+        else if ((c.gameObject.layer & damage) != 0)
         {
             c.gameObject.layer = neutral;
             Debug.Log("damage: " + HP);
@@ -198,10 +198,10 @@ public class MainPC : MonoBehaviour
 
     void OnCollisionStay(Collision c)
     {
-        if ( (transform.position - lastAffixPos).magnitude > minTravelBeforeAffix ||
-         Time.time- lastAffixTime > minTimeBeforeAffix)
+        if ((transform.position - lastAffixPos).magnitude > minTravelBeforeAffix ||
+         Time.time - lastAffixTime > minTimeBeforeAffix)
         {
-            stickytime= true;
+            stickytime = true;
             attatchedTo = c.gameObject;
             lastAffixPos = transform.position;
             lastAffixTime = Time.time;
@@ -212,24 +212,24 @@ public class MainPC : MonoBehaviour
     {
     }
 
-//     void UpdateInputs()
-//     {
-//         inputs = new Inputs(
+    //     void UpdateInputs()
+    //     {
+    //         inputs = new Inputs(
 
-//         )
-//     }
+    //         )
+    //     }
 
 
-//     //int inputs : 0 = not down, 1 = first frame down, 2 = first or after frame down, 3 = frame up.
-//     struct Inputs
-//     {
-//         int jump;
-//         int release;
-//         float mouseX;
-//         float mouseY;
-//         int forward;
-//         int backward;
-//         int left;
-//         int right;
-//     }
- }
+    //     //int inputs : 0 = not down, 1 = first frame down, 2 = first or after frame down, 3 = frame up.
+    //     struct Inputs
+    //     {
+    //         int jump;
+    //         int release;
+    //         float mouseX;
+    //         float mouseY;
+    //         int forward;
+    //         int backward;
+    //         int left;
+    //         int right;
+    //     }
+}

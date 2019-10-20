@@ -168,7 +168,7 @@ MonoBehaviour:
   overchargeTime: 8
   minTravelBeforeAffix: 8
   minTimeBeforeAffix: 5
-  state: 
+  state: DefaultState
   Cam: {fileID: 0}
   heal:
     serializedVersion: 2
