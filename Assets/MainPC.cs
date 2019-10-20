@@ -186,9 +186,9 @@ public class MainPC : MonoBehaviour
         if ((c.gameObject.layer & heal) != 0)
             HP += c.gameObject.GetComponent<HealingItem>().amount;
 
-        else if ((c.gameObject.layer & damage) != 0)
+        if ((c.gameObject.layer & damage) != 0)
         {
-            c.gameObject.layer = neutral;
+            //c.gameObject.layer = neutral;
             Debug.Log("damage: " + HP);
             HP--;
         }
