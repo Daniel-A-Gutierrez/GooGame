@@ -217,7 +217,7 @@ public class MainPC : MonoBehaviour
     void FixedUpdate()
     {
         if (rb.velocity.magnitude == 0)
-            Debug.Log("a");
+//            Debug.Log("a");
         if (collisions > 0 && !stickytime)
         if (traveled > minTravelBeforeAffix ||
          Time.time - lastAffixTime > minTimeBeforeAffixScaled)
