@@ -100,4 +100,4 @@ MonoBehaviour:
   followDistance: 5
   HorizontalSensitivity: 1
   VerticalSensitivity: 1
-  offset: {x: 1, y: 2, z: 0}
+  offset: {x: 0, y: 2, z: 0}

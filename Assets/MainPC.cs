@@ -74,7 +74,7 @@ public class MainPC : MonoBehaviour
         //go to moving if release, go to charging up if jump
     void DefaultState()
     {
-        if(Input.GetKey(release))
+        if(Input.GetKeyUp(release))
         {
             ExitDefaultState();
             EnterMovingState();
@@ -176,12 +176,14 @@ public class MainPC : MonoBehaviour
     {
         if (c.impulse.sqrMagnitude > 0)
             GetComponent<JigglePhysics>().Squish(c.impulse.magnitude,c.impulse);
-        if((c.gameObject.layer & heal) != 0)
+
+        if ((c.gameObject.layer & heal) != 0)
             HP+= c.gameObject.GetComponent<HealingItem>().amount;
+
         else if ((c.gameObject.layer & damage ) != 0 )
         {
             c.gameObject.layer = neutral;
-            
+            Debug.Log("damage: " + HP);
             HP--;
         }
         // if( (transform.position - lastAffixPos).magnitude > minTravelBeforeAffix ||

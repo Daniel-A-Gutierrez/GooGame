@@ -13,9 +13,9 @@ TagManager:
   - UI
   - 
   - 
-  - Neutral
-  - Damage
-  - 
+  - HurtBoy
+  - NoChangeBoy
+  - HealBoy
   - 
   - 
   - 
