@@ -15,7 +15,7 @@ public class JigglePhysics : MonoBehaviour
     float squish;
     float squishChange;
 
-    Vector3 direction;
+    public Vector3 direction;
 
     // Start is called before the first frame update
     void Start()
@@ -40,24 +40,21 @@ public class JigglePhysics : MonoBehaviour
 
         foreach (Transform t in thingsToSquish)
         {
-            t.localScale = new Vector3(SquishFunction(squish, direction.x), SquishFunction(squish, direction.y), SquishFunction(squish, direction.z));
-            t.localPosition = new Vector3((SquishFunction(squish, direction.x) * height - height) * direction.x,
-                (SquishFunction(squish, direction.y) * height - height) * direction.y, (SquishFunction(squish, direction.z) * height - height) * direction.z);
+            t.rotation = Quaternion.FromToRotation(Vector3.up, direction);
+            t.localScale = new Vector3(1 / SquishFunction(squish), SquishFunction(squish), 1 / SquishFunction(squish));
+            t.localPosition = direction.normalized * (SquishFunction(squish) * height - height);
         }
     }
 
-    float SquishFunction(float x, float dir)
+    float SquishFunction(float x)
     {
-        float y;
         if (x > 0)
         {
-            y =  1 / (1 + squish);
+            return 1 / (1 + squish);
         }
         else
         {
-            y =  2 - 1 / (1 - squish);
+            return  2 - 1 / (1 - squish);
         }
-
-        return Mathf.Lerp(1 / y, y, Mathf.Abs(dir));
     }
 }
