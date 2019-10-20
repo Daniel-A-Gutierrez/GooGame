@@ -162,8 +162,8 @@ MonoBehaviour:
   release: 32
   jump: 32
   jumpCooldown: 1
-  maxJumpSpeed: 50
-  minJumpSpeed: 4
+  maxJumpSpeed: 40
+  minJumpSpeed: 15
   chargeupTime: 5
   overchargeTime: 8
   minTravelBeforeAffix: 8
@@ -175,10 +175,11 @@ MonoBehaviour:
     m_Bits: 1024
   neutral:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   damage:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
+  exposedVelocity: {x: 0, y: 0, z: 0}
 --- !u!54 &933124794831448717
 Rigidbody:
   m_ObjectHideFlags: 0

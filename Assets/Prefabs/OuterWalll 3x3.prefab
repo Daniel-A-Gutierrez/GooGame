@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 8835530615859844394}
   - component: {fileID: 5848641896107086039}
   - component: {fileID: 2420743890431358946}
-  m_Layer: 0
-  m_Name: Floor_near (1)
+  m_Layer: 8
+  m_Name: OuterWalll 3x3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

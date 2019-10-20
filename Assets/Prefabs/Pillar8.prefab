@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 3715406095314210870}
   - component: {fileID: 3715406095314210873}
   - component: {fileID: 3715406095314210872}
-  m_Layer: 0
-  m_Name: Block (35)-Merged
+  m_Layer: 8
+  m_Name: Pillar8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

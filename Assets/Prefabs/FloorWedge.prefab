@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6526881066574913610}
   - component: {fileID: 2635065018498172394}
   - component: {fileID: 8024945082388335135}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FloorWedge
   m_TagString: Untagged
   m_Icon: {fileID: 0}

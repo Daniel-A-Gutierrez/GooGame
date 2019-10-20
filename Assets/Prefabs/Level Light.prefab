@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1884107466240470482}
   - component: {fileID: 1884107466240470493}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Level Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
