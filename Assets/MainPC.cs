@@ -24,6 +24,11 @@ public class MainPC : MonoBehaviour
 
     public float minTravelBeforeAffix;
     public float minTimeBeforeAffix;
+
+    float traveled;
+    Vector3 lastPosition;
+    float minTimeBeforeAffixScaled;
+
     float lastAffixTime;
     Vector3 lastAffixPos;
     bool stickytime;
@@ -51,6 +56,7 @@ public class MainPC : MonoBehaviour
     //create States, set default state
     void Awake()
     {
+        lastPosition = transform.position;
         initialScale = transform.localScale;
         rb = GetComponent<Rigidbody>();
         States = new Dictionary<string, Action>();
@@ -64,6 +70,8 @@ public class MainPC : MonoBehaviour
     //do States[state]
     void Update()
     {
+        traveled += (transform.position - lastPosition).magnitude;
+        lastPosition = transform.position;
         aimdir = transform.position - Cam.transform.position + Cam.GetComponent<CameraFollow>().offset;
         States[state]();
         //rb.AddForce(Vector3.right);
@@ -133,8 +141,10 @@ public class MainPC : MonoBehaviour
 
     void Launch()
     {
-        rb.AddForce(aimdir.normalized *
-            Mathf.Lerp(minJumpSpeed, maxJumpSpeed, (Time.time - jumpInitTime) / chargeupTime), ForceMode.VelocityChange);
+        float magnitude = Mathf.Lerp(minJumpSpeed, maxJumpSpeed, (Time.time - jumpInitTime) / chargeupTime);
+        rb.AddForce(aimdir.normalized * magnitude, ForceMode.VelocityChange);
+        minTimeBeforeAffixScaled = minTimeBeforeAffix * magnitude;
+        traveled = 0;
     }
 
     void ExitChargingUpState()
@@ -148,7 +158,7 @@ public class MainPC : MonoBehaviour
         /*transform.SetParent(null);
         transform.localScale = initialScale;*/
         rb.isKinematic = false;
-        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        //rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         attatchedTo = null;
         stickytime = false;
         state = "MovingState";
@@ -206,9 +216,11 @@ public class MainPC : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (collisions > 0)
-        if ((transform.position - lastAffixPos).magnitude > minTravelBeforeAffix ||
-         Time.time - lastAffixTime > minTimeBeforeAffix)
+        if (rb.velocity.magnitude == 0)
+            Debug.Log("a");
+        if (collisions > 0 && !stickytime)
+        if (traveled > minTravelBeforeAffix ||
+         Time.time - lastAffixTime > minTimeBeforeAffixScaled)
         {
             stickytime = true;
             lastAffixPos = transform.position;
