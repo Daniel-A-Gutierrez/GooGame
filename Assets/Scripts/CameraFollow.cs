@@ -11,6 +11,14 @@ public class CameraFollow: MonoBehaviour {
     public float VerticalSensitivity;
     public Vector3 offset;
     Vector3 oldPlayerPosition;
+    public KeyCode aim;
+    public float aimingFollowDistance;
+    public Vector3 aimingOffset;
+    float followDistanceO;
+    Vector3 offsetO;
+
+    float defaultFOV;
+    public float aimingFOV;
     //actually just gonna do something else.
 
     /*
@@ -23,12 +31,37 @@ public class CameraFollow: MonoBehaviour {
 
     public void Start()
     {
+        defaultFOV = GetComponent<Camera>().fieldOfView;
+        offsetO = offset;
+        followDistanceO = followDistance;
         oldPlayerPosition = player.transform.position;
         transform.forward = player.transform.position + offset - transform.position;
         transform.position = player.transform.position + offset -player.transform.forward*followDistance;
     }
+
+    void LateUpdate()
+    {
+        if(Input.GetKey(aim))
+        {
+            offset = aimingOffset;
+            followDistance = aimingFollowDistance;
+            GetComponent<Camera>().fieldOfView = aimingFOV;
+            GetComponent<LaunchArcRenderer>().show_bar = true;
+        }
+        else
+        {
+            offset = offsetO;
+            followDistance = followDistanceO;
+            GetComponent<Camera>().fieldOfView = defaultFOV;
+            //GetComponent<LaunchArcRenderer>().show_bar = false;
+
+        }
+    }
+
     void FixedUpdate () 
     {
+
+
         transform.Translate(player.transform.position-oldPlayerPosition , Space.World);
         oldPlayerPosition = player.transform.position;
 

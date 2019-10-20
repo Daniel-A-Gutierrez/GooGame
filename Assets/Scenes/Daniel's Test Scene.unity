@@ -177,25 +177,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 66678272}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95b48b07429ca9846881a350e84409a8, type: 3}
+  m_Script: {fileID: 11500000, guid: 2cea6d0c18e84ef49a449a9a6b2f4556, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 50
+  HP: 3
   interactable:
     serializedVersion: 2
     m_Bits: 0
   stick:
     serializedVersion: 2
     m_Bits: 4294967295
-  release: 119
+  release: 0
   jump: 32
-  jumpCooldown: 1
-  maxJumpSpeed: 15
-  minJumpSpeed: 4
-  chargeupTime: 2
-  overchargeTime: 3
+  jumpCooldown: 0.5
+  maxJumpSpeed: 20
+  minJumpSpeed: 5
+  chargeupTime: 3
+  overchargeTime: 5
   minTravelBeforeAffix: 1
-  minTimeBeforeAffix: 0.3
+  minTimeBeforeAffix: 0.5
   state: 
   Cam: {fileID: 963194225}
   heal:
@@ -203,7 +203,7 @@ MonoBehaviour:
     m_Bits: 0
   neutral:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   damage:
     serializedVersion: 2
     m_Bits: 0
@@ -517,7 +517,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 5, y: -6, z: 5.5, w: 1.3e-44}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -633,9 +633,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 66678272}
   followDistance: 5
-  HorizontalSensitivity: 1
-  VerticalSensitivity: 1
+  HorizontalSensitivity: 2.5
+  VerticalSensitivity: 2.5
   offset: {x: 1, y: 2, z: 0}
+  aim: 304
+  aimingFollowDistance: 0
+  aimingOffset: {x: 0, y: 0, z: 0}
+  aimingFOV: 60
 --- !u!1 &1276573983
 GameObject:
   m_ObjectHideFlags: 0

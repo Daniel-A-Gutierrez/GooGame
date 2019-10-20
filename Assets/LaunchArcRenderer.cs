@@ -40,6 +40,9 @@ public class LaunchArcRenderer : MonoBehaviour {
     // Start is called before the first frame update
     void Update() {
         lr.enabled = show_bar;
+        velocity_vector = player.GetComponent<MainPC>().exposedVelocity;
+        player_position = player.transform.position;
+        //show bar will be set from the camera follow script
 
         if ( (last_velocity != velocity_vector || last_position != player_position) && show_bar)
         {
