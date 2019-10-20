@@ -26,8 +26,10 @@ public class CameraFollow: MonoBehaviour {
         rotate by mouse movement
         in player controller interpret forward as camera.forward
     */
-    float horizDir = 0;
-    float vertDir = 0;
+    public float horizDir = 0;
+    public float vertDir = 0;
+
+    public bool lockCamera = false;
 
     public void Start()
     {
@@ -35,8 +37,8 @@ public class CameraFollow: MonoBehaviour {
         offsetO = offset;
         followDistanceO = followDistance;
         oldPlayerPosition = player.transform.position;
-        transform.forward = player.transform.position + offset - transform.position;
-        transform.position = player.transform.position + offset -player.transform.forward*followDistance;
+        //transform.forward = player.transform.position + offset - transform.position;
+        //transform.position = player.transform.position + offset -player.transform.forward*followDistance;
     }
 
     void LateUpdate()
@@ -46,7 +48,7 @@ public class CameraFollow: MonoBehaviour {
             offset = aimingOffset;
             followDistance = aimingFollowDistance;
             GetComponent<Camera>().fieldOfView = aimingFOV;
-            GetComponent<LaunchArcRenderer>().show_bar = true;
+            //GetComponent<LaunchArcRenderer>().show_bar = true;
         }
         else
         {
@@ -65,20 +67,23 @@ public class CameraFollow: MonoBehaviour {
         transform.Translate(player.transform.position-oldPlayerPosition , Space.World);
         oldPlayerPosition = player.transform.position;
 
-        float dy = - VerticalSensitivity * Input.GetAxis("Mouse Y");
-        float dh = HorizontalSensitivity * Input.GetAxis("Mouse X");
-        /*transform.RotateAround(player.transform.position,Vector3.up,dh);
+        if (!lockCamera)
+        {
+            float dy = -VerticalSensitivity * Input.GetAxis("Mouse Y");
+            float dh = HorizontalSensitivity * Input.GetAxis("Mouse X");
+            /*transform.RotateAround(player.transform.position,Vector3.up,dh);
 
-        //clamp the y rotation
-        bool lookingUp = dy<0;
-        bool lookingDown = dy>0;
-        if( !((lookingUp & (transform.eulerAngles.x+90)%360 < 10 -dy ) | (lookingDown & (transform.eulerAngles.x+90)%360 >170-dy)))
-            transform.RotateAround(player.transform.position,transform.right,dy);
+            //clamp the y rotation
+            bool lookingUp = dy<0;
+            bool lookingDown = dy>0;
+            if( !((lookingUp & (transform.eulerAngles.x+90)%360 < 10 -dy ) | (lookingDown & (transform.eulerAngles.x+90)%360 >170-dy)))
+                transform.RotateAround(player.transform.position,transform.right,dy);
 
-        transform.forward = (player.transform.position+offset-transform.position).normalized;*/
+            transform.forward = (player.transform.position+offset-transform.position).normalized;*/
 
-        horizDir -= dh;
-        vertDir = Mathf.Clamp(vertDir + dy, -89.9f, 89.9f);
+            horizDir -= dh;
+            vertDir = Mathf.Clamp(vertDir + dy, -89.9f, 89.9f);
+        }
 
         Vector3 direction = new Vector3(Mathf.Cos(horizDir * Mathf.Deg2Rad) * Mathf.Cos(vertDir * Mathf.Deg2Rad), Mathf.Sin(vertDir * Mathf.Deg2Rad), Mathf.Sin(horizDir * Mathf.Deg2Rad) * Mathf.Cos(vertDir * Mathf.Deg2Rad));
 

@@ -8,6 +8,11 @@ public class EndOutlet : MonoBehaviour
     [SerializeField] string nextScene;
     [SerializeField] Vector3 direction = Vector3.zero;
 
+    [SerializeField] CameraFollow cameraFollower;
+    [SerializeField] MainPC mainPC;
+
+    [SerializeField] Vector2 cameraDirection;
+
     bool activated = false;
 
     // Start is called before the first frame update
@@ -26,6 +31,8 @@ public class EndOutlet : MonoBehaviour
     {
         if (!activated && other.tag == "Player")
         {
+            mainPC.enabled = false;
+
             activated = true;
             other.attachedRigidbody.isKinematic = true;
 
@@ -33,11 +40,19 @@ public class EndOutlet : MonoBehaviour
 
             other.GetComponent<JigglePhysics>().Squish(3, direction);
 
+            cameraFollower.lockCamera = true;
+            float startH = cameraFollower.horizDir;
+            float startV = cameraFollower.vertDir;
+
             for (int i = 0; i < 60; i++)
             {
-                other.transform.position = Vector3.Lerp(start, transform.position + direction, i / 60f);
+                cameraFollower.horizDir = Mathf.Lerp(startH, cameraDirection.x, (i + 1) / 60f);
+                cameraFollower.vertDir = Mathf.Lerp(startV, cameraDirection.y, (i + 1) / 60f);
+                other.transform.position = Vector3.Lerp(start, transform.position + direction, (i + 1) / 60f);
                 yield return null;
             }
+
+            cameraFollower.enabled = false;
 
             for (int i = 0; i < 30; i++)
             {
@@ -45,6 +60,7 @@ public class EndOutlet : MonoBehaviour
             }
 
             other.GetComponent<JigglePhysics>().enabled = false;
+            other.transform.rotation = Quaternion.identity;
 
             Vector3 dirNorm = direction.normalized;
 

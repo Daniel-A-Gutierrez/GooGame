@@ -5,8 +5,17 @@ using UnityEngine;
 public class GooEntrance : MonoBehaviour
 {
     [SerializeField] Vector3 direction = Vector3.zero;
+    [SerializeField] CameraFollow cameraFollower;
 
+    MainPC mainPC;
     // Start is called before the first frame update
+    private void Awake()
+    {
+        mainPC = GetComponent<MainPC>();
+        mainPC.enabled = false;
+        cameraFollower.enabled = false;
+    }
+
     void Start()
     {
         StartCoroutine(Entrance());
@@ -53,5 +62,13 @@ public class GooEntrance : MonoBehaviour
         }
 
         rb.isKinematic = false;
+
+        for (int i = 0; i < 30; i++)
+        {
+            yield return null;
+        }
+
+        cameraFollower.enabled = true;
+        mainPC.enabled = true;
     }
 }
