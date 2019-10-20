@@ -115,12 +115,12 @@ public class MainPC : MonoBehaviour
     //enter moving state if successful jump, enter default if overcharge. 
     void ChargingUpState()
     {
+        exposedVelocity = aimdir.normalized *
+                Mathf.Lerp(minJumpSpeed, maxJumpSpeed, (Time.time - jumpInitTime) / chargeupTime);
         if (Input.GetKeyUp(jump))
         {
             ExitChargingUpState();
             EnterMovingState();
-            exposedVelocity = aimdir.normalized *
-                Mathf.Lerp(minJumpSpeed, maxJumpSpeed, (Time.time - jumpInitTime) / chargeupTime);
             Launch();
         }
         if (Time.time - jumpInitTime > overchargeTime)
