@@ -39,6 +39,10 @@ public class MainPC : MonoBehaviour
 
     public GameObject Cam;
     GameObject interactingWith;
+
+    public LayerMask heal;
+    public LayerMask neutral;
+    public LayerMask damage;
     //Inputs inputs;
 
     //create States, set default state
@@ -169,6 +173,14 @@ public class MainPC : MonoBehaviour
     {
         if(c.impulse.sqrMagnitude > 0)
             GetComponent<JigglePhysics>().Squish(c.impulse.magnitude,c.impulse);
+        if((c.gameObject.layer & heal) != 0)
+            HP+= c.gameObject.GetComponent<HealingItem>().amount;
+        else if ((c.gameObject.layer & damage ) != 0 )
+        {
+            c.gameObject.layer = neutral;
+            
+            HP--;
+        }
         // if( (transform.position - lastAffixPos).magnitude > minTravelBeforeAffix ||
         //  Time.time- lastAffixTime > minTimeBeforeAffix)
         // {
