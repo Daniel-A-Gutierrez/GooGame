@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 523571266}
   - component: {fileID: 523571265}
   - component: {fileID: 523571267}
+  - component: {fileID: 523571270}
   - component: {fileID: 523571268}
   m_Layer: 0
   m_Name: Blob
@@ -152,7 +153,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -207,13 +208,26 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 523571264}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 6, z: 0}
+  m_LocalPosition: {x: -1.37, y: 1.347, z: 2.79}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1529388802}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &523571270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 523571264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59d673dfe2669c74fab2a225a9c247f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: {x: 0, y: 1, z: 0}
 --- !u!1 &527174667
 GameObject:
   m_ObjectHideFlags: 0
@@ -973,7 +987,6 @@ GameObject:
   - component: {fileID: 2128004143}
   - component: {fileID: 2128004142}
   - component: {fileID: 2128004141}
-  - component: {fileID: 2128004140}
   m_Layer: 0
   m_Name: outlet (2)
   m_TagString: Untagged
@@ -981,20 +994,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2128004140
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2128004139}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40a4fb8511e7ac5468480e3cfa25f279, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nextScene: ConanTesting2
-  direction: {x: 0, y: 1, z: 0}
 --- !u!65 &2128004141
 BoxCollider:
   m_ObjectHideFlags: 0

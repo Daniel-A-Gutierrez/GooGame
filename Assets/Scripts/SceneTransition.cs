@@ -39,14 +39,11 @@ public class SceneTransition : MonoBehaviour
 
     IEnumerator Transition(string sceneName)
     {
-        for (int i = 0; i < 60; i++)
+        for (int i = 29; i >= 0; i--)
         {
-            rectTransform.localPosition -= new Vector3(0, 18);
-            rectTransform.sizeDelta += new Vector2(0, 36);
+            rectTransform.localPosition = new Vector3(0, i * 36);
             yield return null;
         }
-
-        rectTransform.RotateAround(rectTransform.parent.position, Vector3.forward, 180);
 
         for (int i = 0; i < 60; i++)
         {
@@ -56,13 +53,12 @@ public class SceneTransition : MonoBehaviour
         if (sceneName != "")
             yield return SceneManager.LoadSceneAsync(sceneName);
 
-        for (int i = 0; i < 60; i++)
+        for (int i = 0; i < 30; i++)
         {
-            rectTransform.localPosition -= new Vector3(0, 18);
-            rectTransform.sizeDelta -= new Vector2(0, 36);
+            rectTransform.localPosition = new Vector3(0, i * -36);
             yield return null;
         }
 
-        rectTransform.RotateAround(rectTransform.parent.position, Vector3.forward, 180);
+        rectTransform.localPosition = new Vector3(0, 1080);
     }
 }

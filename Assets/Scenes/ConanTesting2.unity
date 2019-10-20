@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 523571266}
   - component: {fileID: 523571265}
   - component: {fileID: 523571267}
+  - component: {fileID: 523571270}
   - component: {fileID: 523571268}
   m_Layer: 0
   m_Name: Blob
@@ -207,13 +208,26 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 523571264}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 6, z: 0}
+  m_LocalPosition: {x: -5.852, y: 2.663, z: 0.448}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1529388802}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &523571270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 523571264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59d673dfe2669c74fab2a225a9c247f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: {x: 1, y: 0, z: 0}
 --- !u!1 &527174667
 GameObject:
   m_ObjectHideFlags: 0
@@ -554,13 +568,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1159633292}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -2.72, y: 4.23, z: 8.73}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.72, y: 4.23, z: -5.57}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1265737182
 GameObject:
   m_ObjectHideFlags: 0
@@ -866,7 +880,6 @@ GameObject:
   - component: {fileID: 1941552584}
   - component: {fileID: 1941552583}
   - component: {fileID: 1941552582}
-  - component: {fileID: 1941552586}
   m_Layer: 0
   m_Name: outlet
   m_TagString: Untagged
@@ -947,20 +960,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1941552586
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1941552581}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40a4fb8511e7ac5468480e3cfa25f279, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nextScene: ConanTesting
-  direction: {x: 1, y: 0, z: 0}
 --- !u!1 &2128004139
 GameObject:
   m_ObjectHideFlags: 0
