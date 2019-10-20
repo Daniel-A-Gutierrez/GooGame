@@ -85,7 +85,7 @@ public class CameraFollow: MonoBehaviour {
         RaycastHit hitInfo;
         if (Physics.Raycast(player.transform.position + offset, direction, out hitInfo, followDistance))
         {
-            transform.position = player.transform.position + offset + direction * hitInfo.distance * 0.9f;
+            transform.position = player.transform.position + offset + direction * hitInfo.distance * 0.7f;
         }
         else
         {
