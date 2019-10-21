@@ -58,6 +58,8 @@ public class MainPC : MonoBehaviour
     int lastHitLayer = 0;
     int healAmount = 0;
 
+    AudioManager audioManager;
+
     //create States, set default state
     void Awake()
     {
@@ -73,6 +75,8 @@ public class MainPC : MonoBehaviour
 
         arcRenderer = Cam.GetComponent<LaunchArcRenderer>();
         arcRenderer.show_bar = false;
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        audioManager.player = gameObject;
     }
 
     //do States[state]
@@ -199,6 +203,7 @@ public class MainPC : MonoBehaviour
 
     void OnCollisionEnter(Collision c)
     {
+        audioManager.Play("zapsplat");
         Debug.Log(stickytime);
         collisions++;
         if (c.impulse.sqrMagnitude > 0)
@@ -239,6 +244,7 @@ public class MainPC : MonoBehaviour
                 HP--;
                     if (HP == 0)
                     {
+                        audioManager.Play("zapsplat3");
                         rb.isKinematic = true;
                         GetComponentInChildren<DieEffect>().Die(transform.position);
                         enabled = false;
@@ -255,6 +261,7 @@ public class MainPC : MonoBehaviour
 
     void OnCollisionExit(Collision c)
     {
+        audioManager.Play("zapsplat2");
         collisions--;
     }
 

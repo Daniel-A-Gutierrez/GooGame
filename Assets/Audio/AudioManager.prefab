@@ -1,0 +1,112 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5551943662646266880
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2085599163709250466}
+  - component: {fileID: 2208395881485410434}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2085599163709250466
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5551943662646266880}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.7117016, y: 6.951298, z: -9.400002}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2208395881485410434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5551943662646266880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10ba36fe28a9a0849966f40053ef10f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: funky chill 2 loop
+    clip: {fileID: 8300000, guid: 0089516f022526247bb710ef571d9407, type: 3}
+    volume: 1
+    pitch: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: goo ball theme 04
+    clip: {fileID: 8300000, guid: 57292d8bee33d974c82e519ad8db88c7, type: 3}
+    volume: 1
+    pitch: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: background fan air vent loop 01
+    clip: {fileID: 8300000, guid: 8f0ff74d582337a42bccd2514979288a, type: 3}
+    volume: 1
+    pitch: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: light flourescent hum flicker loop1
+    clip: {fileID: 8300000, guid: 6348e38ac3db1e3468aa614b2b1cfde3, type: 3}
+    volume: 1
+    pitch: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: zapsplat
+    clip: {fileID: 8300000, guid: 6802aecb87c99014898eda9c345c449e, type: 3}
+    volume: 1
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: zapsplat2
+    clip: {fileID: 8300000, guid: 31c2c9833abe7b841a855193bcb8494f, type: 3}
+    volume: 1
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: zapsplat3
+    clip: {fileID: 8300000, guid: a53ab69e82614a54eba349facb179f70, type: 3}
+    volume: 1
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: funky chill 2 loop
+    clip: {fileID: 8300000, guid: 0089516f022526247bb710ef571d9407, type: 3}
+    volume: 1
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: electric 1
+    clip: {fileID: 8300000, guid: 6223a0affc7b5d4438d17ebae2069697, type: 3}
+    volume: 1
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: lq positive notification
+    clip: {fileID: 8300000, guid: c99b7119b73f1284f8533e72b07a972d, type: 3}
+    volume: 1
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: lq stage clear
+    clip: {fileID: 8300000, guid: 1ca5752cc27918b4cbf7d3f160b91faa, type: 3}
+    volume: 1
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}

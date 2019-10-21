@@ -8,12 +8,14 @@ public class MainMenuController : MonoBehaviour
     public GameObject MainMenu;
     public GameObject Credits;
     public GameObject Instructions;
+    public AudioManager audioManager;
 
-    public AudioClip clip;
-    private AudioSource source;
+
 
     private void Start()
     {
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        //audioManager.Play("funky chill loop 2");
         MainMenu.SetActive(true);
         //source = GetComponent<AudioSource>();
     }
