@@ -168,6 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 3
+  MaxHP: 3
   interactable:
     serializedVersion: 2
     m_Bits: 4294967295
