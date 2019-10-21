@@ -3652,6 +3652,11 @@ PrefabInstance:
       propertyPath: death
       value: 
       objectReference: {fileID: 1310791460}
+    - target: {fileID: 933124794831448706, guid: 9667cd98d94824143a79d96944d0d1ba,
+        type: 3}
+      propertyPath: MaxHP
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 933124794831448717, guid: 9667cd98d94824143a79d96944d0d1ba,
         type: 3}
       propertyPath: m_IsKinematic
