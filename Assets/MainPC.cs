@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public class MainPC : MonoBehaviour
 {
@@ -21,16 +22,21 @@ public class MainPC : MonoBehaviour
     public float overchargeTime;
     float jumpInitTime;
 
-    
+
     public float minTravelBeforeAffix;
     public float minTimeBeforeAffix;
+
+    float traveled;
+    Vector3 lastPosition;
+    float minTimeBeforeAffixScaled;
+
     float lastAffixTime;
     Vector3 lastAffixPos;
     bool stickytime;
 
     [SerializeField]
     string state;
-    Dictionary<string,Action> States;
+    Dictionary<string, Action> States;
 
     GameObject attatchedTo;
     GameObject cam;
@@ -38,24 +44,42 @@ public class MainPC : MonoBehaviour
     Vector3 initialScale;
 
     public GameObject Cam;
+    LaunchArcRenderer arcRenderer;
+    GameObject interactingWith;
+
+    public LayerMask heal;
+    public LayerMask neutral;
+    public LayerMask damage;
     //Inputs inputs;
+
+    public Vector3 exposedVelocity;
+    public int collisions = 0;
+
+    int lastHitLayer = 0;
+    int healAmount = 0;
 
     //create States, set default state
     void Awake()
     {
-        initialScale = transform.localScale; 
+        lastPosition = transform.position;
+        initialScale = transform.localScale;
         rb = GetComponent<Rigidbody>();
-        States = new Dictionary<string,Action>();
-        state = "DefaultState"; //stuck on non interactable object
+        States = new Dictionary<string, Action>();
+        state = "MovingState"; //stuck on non interactable object
         States["DefaultState"] = DefaultState;
         States["InteractingState"] = InteractingState;
         States["ChargingUpState"] = ChargingUpState;
         States["MovingState"] = MovingState;
+
+        arcRenderer = Cam.GetComponent<LaunchArcRenderer>();
+        arcRenderer.show_bar = false;
     }
 
     //do States[state]
     void Update()
     {
+        traveled += (transform.position - lastPosition).magnitude;
+        lastPosition = transform.position;
         aimdir = transform.position - Cam.transform.position + Cam.GetComponent<CameraFollow>().offset;
         States[state]();
         //rb.AddForce(Vector3.right);
@@ -66,15 +90,15 @@ public class MainPC : MonoBehaviour
     {
         state = "DefaultState";
     }
-        //go to moving if release, go to charging up if jump
+    //go to moving if release, go to charging up if jump
     void DefaultState()
     {
-        if(Input.GetKey(release))
+        if (Input.GetKeyUp(release))
         {
             ExitDefaultState();
             EnterMovingState();
         }
-        if(Input.GetKeyDown(jump) && Time.time - jumpInitTime > jumpCooldown)
+        if (Input.GetKeyDown(jump) && Time.time - jumpInitTime > jumpCooldown)
         {
             ExitDefaultState();
             EnterChargingUpState();
@@ -89,7 +113,7 @@ public class MainPC : MonoBehaviour
     //Interacting State
     void EnterInteractingState()
     {
-        
+        state = "InteractingState";
     }
     void InteractingState()
     {
@@ -102,19 +126,22 @@ public class MainPC : MonoBehaviour
     //Charging Up State
     void EnterChargingUpState()
     {
-        state= "ChargingUpState";
+        arcRenderer.show_bar = true;
+        state = "ChargingUpState";
         jumpInitTime = Time.time;
     }
-        //enter moving state if successful jump, enter default if overcharge. 
+    //enter moving state if successful jump, enter default if overcharge. 
     void ChargingUpState()
     {
-        if(Input.GetKeyUp(jump))
+        exposedVelocity = aimdir.normalized *
+                Mathf.Lerp(minJumpSpeed, maxJumpSpeed, (Time.time - jumpInitTime) / chargeupTime);
+        if (Input.GetKeyUp(jump))
         {
             ExitChargingUpState();
             EnterMovingState();
             Launch();
         }
-        if(Time.time - jumpInitTime > overchargeTime)
+        if (Time.time - jumpInitTime > overchargeTime)
         {
             ExitChargingUpState();
             EnterDefaultState();
@@ -123,66 +150,104 @@ public class MainPC : MonoBehaviour
 
     void Launch()
     {
-        rb.AddForce(aimdir.normalized * 
-            Mathf.Lerp( minJumpSpeed,maxJumpSpeed, (Time.time- jumpInitTime) / chargeupTime), ForceMode.VelocityChange );
+        float magnitude = Mathf.Lerp(minJumpSpeed, maxJumpSpeed, (Time.time - jumpInitTime) / chargeupTime);
+        rb.AddForce(aimdir.normalized * magnitude, ForceMode.VelocityChange);
+        minTimeBeforeAffixScaled = minTimeBeforeAffix * magnitude;
+        traveled = 0;
     }
 
     void ExitChargingUpState()
     {
-        
+        arcRenderer.show_bar = false;
+        exposedVelocity = Vector3.zero;
     }
     //MovingState
-        //set kinematic, set no parent, add force, stickytime false, set state 
+    //set kinematic, set no parent, add force, stickytime false, set state 
     void EnterMovingState()
     {
-        transform.SetParent(null);
-        transform.localScale = initialScale;
-        rb.isKinematic =false;
+        /*transform.SetParent(null);
+        transform.localScale = initialScale;*/
+        rb.isKinematic = false;
+        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        attatchedTo = null;
         stickytime = false;
-        state= "MovingState";
+        state = "MovingState";
     }
-        //wait for stickytime to be true to go to default.
+    //wait for stickytime to be true to go to default.
     void MovingState()
     {
         //wait for collision
-        if(stickytime)
+        if (stickytime)
         {
             ExitMovingState();
             EnterDefaultState();
         }
     }
-        //set parent, set kinematic
+    //set parent, set kinematic
     void ExitMovingState()
     {
         //on notiification of collision
-        transform.SetParent(attatchedTo.transform);
+        /*transform.SetParent(attatchedTo.transform);
         transform.localEulerAngles = Vector3.zero;
         Vector3 i = attatchedTo.transform.localScale;
-        transform.localScale=  new Vector3(1/i.x, 1/i.y, 1/i.z);
+        transform.localScale=  new Vector3(1/i.x, 1/i.y, 1/i.z);*/
+        rb.collisionDetectionMode = CollisionDetectionMode.Discrete;
         rb.isKinematic = true;
         //if the thing is interactable, enter that state. for now we're not doing that.
 
     }
 
-    // void OnCollisionEnter(Collision c)
-    // {
-    //     if( (transform.position - lastAffixPos).magnitude > minTravelBeforeAffix ||
-    //      Time.time- lastAffixTime > minTimeBeforeAffix)
-    //     {
-    //         stickytime= true;
-    //         attatchedTo = c.gameObject;
-    //         lastAffixPos= transform.position;
-    //         lastAffixTime = Time.time;
-    //     }
-    // }
-
-    void OnCollisionStay(Collision c)
+    void OnCollisionEnter(Collision c)
     {
-        if( (transform.position - lastAffixPos).magnitude > minTravelBeforeAffix ||
-         Time.time- lastAffixTime > minTimeBeforeAffix)
+        Debug.Log(stickytime);
+        collisions++;
+        if (c.impulse.sqrMagnitude > 0)
+            GetComponent<JigglePhysics>().Squish(c.impulse.magnitude, c.impulse);
+
+        lastHitLayer = c.gameObject.layer;
+
+        if (c.gameObject.GetComponent<HealingItem>() != null)
+            healAmount = c.gameObject.GetComponent<HealingItem>().amount;
+
+        if (attatchedTo != c.gameObject)
         {
-            stickytime= true;
             attatchedTo = c.gameObject;
+        }
+        // if( (transform.position - lastAffixPos).magnitude > minTravelBeforeAffix ||
+        //  Time.time- lastAffixTime > minTimeBeforeAffix)
+        // {
+        //     stickytime= true;
+        //     attatchedTo = c.gameObject;
+        //     lastAffixPos= transform.position;
+        //     lastAffixTime = Time.time;
+        // }
+    }
+
+    void FixedUpdate()
+    {
+        if (collisions > 0 && !stickytime)
+        if (traveled > minTravelBeforeAffix ||
+         Time.time - lastAffixTime > minTimeBeforeAffixScaled)
+        {
+            if ((1 << lastHitLayer & heal) != 0)
+                HP += healAmount;
+
+            if ((1 << lastHitLayer & damage) != 0)
+            {
+                //c.gameObject.layer = neutral;
+                //Debug.Log("damage: " + HP);
+                HP--;
+                    if (HP == 0)
+                    {
+                        rb.isKinematic = true;
+                        GetComponentInChildren<DieEffect>().Die(transform.position);
+                        enabled = false;
+                        GetComponentInChildren<MeshRenderer>().enabled = false;
+                        SceneTransition.instance.StartTransition(SceneManager.GetActiveScene().name, 60);
+                    }
+            }
+
+                stickytime = true;
             lastAffixPos = transform.position;
             lastAffixTime = Time.time;
         }
@@ -190,28 +255,27 @@ public class MainPC : MonoBehaviour
 
     void OnCollisionExit(Collision c)
     {
-        stickytime = false;
-        attatchedTo = null;
+        collisions--;
     }
 
-//     void UpdateInputs()
-//     {
-//         inputs = new Inputs(
+    //     void UpdateInputs()
+    //     {
+    //         inputs = new Inputs(
 
-//         )
-//     }
+    //         )
+    //     }
 
 
-//     //int inputs : 0 = not down, 1 = first frame down, 2 = first or after frame down, 3 = frame up.
-//     struct Inputs
-//     {
-//         int jump;
-//         int release;
-//         float mouseX;
-//         float mouseY;
-//         int forward;
-//         int backward;
-//         int left;
-//         int right;
-//     }
- }
+    //     //int inputs : 0 = not down, 1 = first frame down, 2 = first or after frame down, 3 = frame up.
+    //     struct Inputs
+    //     {
+    //         int jump;
+    //         int release;
+    //         float mouseX;
+    //         float mouseY;
+    //         int forward;
+    //         int backward;
+    //         int left;
+    //         int right;
+    //     }
+}

@@ -27,6 +27,7 @@ public class LaunchArcRenderer : MonoBehaviour {
     Vector3 last_position;
 
     public bool show_bar; 
+    public LayerMask notPlayer;
 
     private void Awake() {
         
@@ -40,12 +41,15 @@ public class LaunchArcRenderer : MonoBehaviour {
     // Start is called before the first frame update
     void Update() {
         lr.enabled = show_bar;
+        velocity_vector = player.GetComponent<MainPC>().exposedVelocity;
+        player_position = player.transform.position ;
+        //show bar will be set from the camera follow script
 
         if ( (last_velocity != velocity_vector || last_position != player_position) && show_bar)
         {
             lr.SetPositions(CalculateArcArray(velocity_vector));
             last_velocity = velocity_vector;
-            last_position = player_position;
+            last_position =player.transform.position ;
         } 
     }
 
@@ -57,7 +61,7 @@ public class LaunchArcRenderer : MonoBehaviour {
 
         Vector3[] arcArray = new Vector3[resolution + 1];
 
-        player_position = player.transform.position;
+        //player_position = player.transform.position;
 
         arcArray[0] = player_position; 
         arcArray[1] = arcArray[0] + (vi * 0.05f);
@@ -78,7 +82,7 @@ public class LaunchArcRenderer : MonoBehaviour {
                 arcArray[i] = arcArray[last_point];
             }
 
-            if (Physics.Raycast(arcArray[i-1], arcArray[i] - arcArray[i-1], .75f) )
+            if (Physics.Raycast(arcArray[i-1], arcArray[i] - arcArray[i-1], .75f, notPlayer) )
             {
                 hasCollided = true;
                 last_point = i;
