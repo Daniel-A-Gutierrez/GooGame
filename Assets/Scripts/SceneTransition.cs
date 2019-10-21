@@ -51,7 +51,7 @@ public class SceneTransition : MonoBehaviour
 
         for (int i = 29; i >= 0; i--)
         {
-            rectTransform.localPosition = new Vector3(0, i * 36);
+            rectTransform.localPosition = new Vector3(0, i * 48 - 108);
             yield return null;
         }
 
@@ -65,10 +65,10 @@ public class SceneTransition : MonoBehaviour
 
         for (int i = 0; i < 30; i++)
         {
-            rectTransform.localPosition = new Vector3(0, i * -36);
+            rectTransform.localPosition = new Vector3(0, i * -48 - 108);
             yield return null;
         }
 
-        rectTransform.localPosition = new Vector3(0, 1080);
+        rectTransform.localPosition = new Vector3(0, 1600);
     }
 }
