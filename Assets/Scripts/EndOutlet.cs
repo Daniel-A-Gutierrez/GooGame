@@ -31,6 +31,8 @@ public class EndOutlet : MonoBehaviour
     {
         if (!activated && other.tag == "Player")
         {
+            AudioManager am = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+            am.Play("lq stage clear");
             mainPC.enabled = false;
 
             activated = true;
@@ -65,6 +67,8 @@ public class EndOutlet : MonoBehaviour
 
             other.GetComponent<JigglePhysics>().enabled = false;
             other.transform.rotation = Quaternion.identity;
+            am.Play("succ");
+            am.Play("electric6");
 
             Vector3 dirNorm = direction.normalized;
 
