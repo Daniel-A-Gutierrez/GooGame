@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public class MainPC : MonoBehaviour
 {
@@ -53,6 +54,9 @@ public class MainPC : MonoBehaviour
 
     public Vector3 exposedVelocity;
     public int collisions = 0;
+
+    int lastHitLayer = 0;
+    int healAmount = 0;
 
     //create States, set default state
     void Awake()
@@ -195,22 +199,18 @@ public class MainPC : MonoBehaviour
 
     void OnCollisionEnter(Collision c)
     {
+        Debug.Log(stickytime);
         collisions++;
         if (c.impulse.sqrMagnitude > 0)
             GetComponent<JigglePhysics>().Squish(c.impulse.magnitude, c.impulse);
 
+        lastHitLayer = c.gameObject.layer;
+
+        if (c.gameObject.GetComponent<HealingItem>() != null)
+            healAmount = c.gameObject.GetComponent<HealingItem>().amount;
+
         if (attatchedTo != c.gameObject)
         {
-            if ((1 << c.gameObject.layer & heal) != 0)
-                HP += c.gameObject.GetComponent<HealingItem>().amount;
-
-            if ((1 << c.gameObject.layer & damage) != 0)
-            {
-                //c.gameObject.layer = neutral;
-                Debug.Log("damage: " + HP);
-                HP--;
-            }
-
             attatchedTo = c.gameObject;
         }
         // if( (transform.position - lastAffixPos).magnitude > minTravelBeforeAffix ||
@@ -229,7 +229,25 @@ public class MainPC : MonoBehaviour
         if (traveled > minTravelBeforeAffix ||
          Time.time - lastAffixTime > minTimeBeforeAffixScaled)
         {
-            stickytime = true;
+            if ((1 << lastHitLayer & heal) != 0)
+                HP += healAmount;
+
+            if ((1 << lastHitLayer & damage) != 0)
+            {
+                //c.gameObject.layer = neutral;
+                //Debug.Log("damage: " + HP);
+                HP--;
+                    if (HP == 0)
+                    {
+                        rb.isKinematic = true;
+                        GetComponentInChildren<DieEffect>().Die(transform.position);
+                        enabled = false;
+                        GetComponentInChildren<MeshRenderer>().enabled = false;
+                        SceneTransition.instance.StartTransition(SceneManager.GetActiveScene().name, 60);
+                    }
+            }
+
+                stickytime = true;
             lastAffixPos = transform.position;
             lastAffixTime = Time.time;
         }

@@ -34,11 +34,21 @@ public class SceneTransition : MonoBehaviour
 
     public void StartTransition(string sceneName)
     {
-        StartCoroutine(Transition(sceneName));
+        StartCoroutine(Transition(sceneName, 0));
     }
 
-    IEnumerator Transition(string sceneName)
+    public void StartTransition(string sceneName, int delay)
     {
+        StartCoroutine(Transition(sceneName, delay));
+    }
+
+    IEnumerator Transition(string sceneName, int delay)
+    {
+        for(int i = 0; i < delay; i++)
+        {
+            yield return null;
+        }
+
         for (int i = 29; i >= 0; i--)
         {
             rectTransform.localPosition = new Vector3(0, i * 36);
