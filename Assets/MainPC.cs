@@ -8,6 +8,7 @@ public class MainPC : MonoBehaviour
 {
 
     public int HP;
+    public int MaxHP;
     public LayerMask interactable;
     public LayerMask stick;
     Rigidbody rb;
@@ -230,7 +231,7 @@ public class MainPC : MonoBehaviour
          Time.time - lastAffixTime > minTimeBeforeAffixScaled)
         {
             if ((1 << lastHitLayer & heal) != 0)
-                HP += healAmount;
+                HP = MaxHP;
 
             if ((1 << lastHitLayer & damage) != 0)
             {
