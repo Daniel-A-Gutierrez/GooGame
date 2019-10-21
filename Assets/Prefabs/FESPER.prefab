@@ -181,7 +181,7 @@ MonoBehaviour:
   maxJumpSpeed: 30
   minJumpSpeed: 15
   chargeupTime: 3
-  overchargeTime: 4
+  overchargeTime: 1000
   minTravelBeforeAffix: 2
   minTimeBeforeAffix: 5
   state: DefaultState
