@@ -41,7 +41,7 @@ public class GooEntrance : MonoBehaviour
 
         Vector3 scale = Vector3.one * 0.1f + new Vector3(Mathf.Abs(dirNorm.x), Mathf.Abs(dirNorm.y), Mathf.Abs(dirNorm.z)) * 0.9f;
         transform.localScale = scale;
-
+        GameObject.Find("AudioManager").GetComponent<AudioManager>().Play("succ");
         for (int i = 0; i < 5; i++)
         {
             transform.position += dirNorm * 0.1f;
